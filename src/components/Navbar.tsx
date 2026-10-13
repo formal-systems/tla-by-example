@@ -12,8 +12,14 @@ export interface NavLink {
 
 // Opens this repo in GitHub Codespaces (see .devcontainer/devcontainer.json):
 // full VS Code in the browser with the TLA+ extension, TLC, the lessons as
-// .tla/.cfg files and the tlaplus/Examples specifications.
-export const CODESPACES_URL = "https://codespaces.new/tlaplus/tla-by-example?quickstart=1";
+// .tla/.cfg files and the tlaplus/Examples specifications. Point it at a fork
+// or branch with NEXT_PUBLIC_CODESPACES_REPO / NEXT_PUBLIC_CODESPACES_REF.
+const codespacesRepo = process.env.NEXT_PUBLIC_CODESPACES_REPO || "tlaplus/tla-by-example";
+const codespacesRef = process.env.NEXT_PUBLIC_CODESPACES_REF;
+export const CODESPACES_URL =
+  `https://codespaces.new/${codespacesRepo}` +
+  (codespacesRef ? `/tree/${codespacesRef}` : "") +
+  "?quickstart=1";
 
 interface NavbarProps {
   breadcrumbs: BreadcrumbItem[];

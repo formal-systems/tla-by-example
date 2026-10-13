@@ -38,6 +38,8 @@ The **Open in VS Code** button on lesson and spec pages opens this repository in
 - every lesson exported to `lessons/<section>/<lesson>/<Module>.tla` and `.cfg`
 - the [tlaplus/Examples](https://github.com/tlaplus/Examples) specifications in `Examples/`
 
+To point the button at a fork or branch (e.g. for a demo), build with `NEXT_PUBLIC_CODESPACES_REPO=owner/repo` and optionally `NEXT_PUBLIC_CODESPACES_REF=branch`.
+
 Open a `.tla` file and run **TLA+: Check model with TLC**. Codespaces usage is billed to the GitHub account that creates the codespace; personal accounts include a monthly free quota.
 
 To export the lessons locally (requires Node.js 22.18+ for TypeScript type stripping):
