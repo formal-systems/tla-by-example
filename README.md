@@ -27,3 +27,21 @@ npm run build     # static export to out/
 Requires Node.js 20+.
 
 See [the lesson authoring guide](dev/lessons.md) for the Markdown format, lesson registration, expected outcomes, and BlockingQueue source alignment.
+
+## Full TLA+ tooling in the browser (GitHub Codespaces)
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/tlaplus/tla-by-example?quickstart=1)
+
+The **Open in VS Code** button on lesson and spec pages opens this repository in a codespace (`.devcontainer/devcontainer.json`). It provides:
+
+- VS Code in the browser with the [TLA+ extension](https://marketplace.visualstudio.com/items?itemName=tlaplus.vscode-ide) and Java for TLC
+- every lesson exported to `lessons/<section>/<lesson>/<Module>.tla` and `.cfg`
+- the [tlaplus/Examples](https://github.com/tlaplus/Examples) specifications in `Examples/`
+
+Open a `.tla` file and run **TLA+: Check model with TLC**. Codespaces usage is billed to the GitHub account that creates the codespace; personal accounts include a monthly free quota.
+
+To export the lessons locally (requires Node.js 22.18+ for TypeScript type stripping):
+
+```bash
+npm run export-lessons
+```

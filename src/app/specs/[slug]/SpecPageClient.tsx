@@ -68,6 +68,7 @@ export default function SpecPageClient({ name, readme, modules }: SpecPageClient
             { label: "Specifications", href: "/#specifications" },
             { label: name },
           ]}
+          showCodespaces
         />
       }
       left={<MarkdownContent content={readme} />}
