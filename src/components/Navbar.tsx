@@ -10,25 +10,13 @@ export interface NavLink {
   href: string;
 }
 
-// Opens this repo in GitHub Codespaces (see .devcontainer/devcontainer.json):
-// full VS Code in the browser with the TLA+ extension, TLC, the lessons as
-// .tla/.cfg files and the tlaplus/Examples specifications. Point it at a fork
-// or branch with NEXT_PUBLIC_CODESPACES_REPO / NEXT_PUBLIC_CODESPACES_REF.
-const codespacesRepo = process.env.NEXT_PUBLIC_CODESPACES_REPO || "tlaplus/tla-by-example";
-const codespacesRef = process.env.NEXT_PUBLIC_CODESPACES_REF;
-export const CODESPACES_URL =
-  `https://codespaces.new/${codespacesRepo}` +
-  (codespacesRef ? `/tree/${codespacesRef}` : "") +
-  "?quickstart=1";
-
 interface NavbarProps {
   breadcrumbs: BreadcrumbItem[];
   prev?: NavLink;
   next?: NavLink;
-  showCodespaces?: boolean;
 }
 
-export default function Navbar({ breadcrumbs, prev, next, showCodespaces }: NavbarProps) {
+export default function Navbar({ breadcrumbs, prev, next }: NavbarProps) {
   return (
     <nav className="flex items-center justify-between border-b border-gray-200 bg-white px-4 py-3">
       <div className="flex items-center gap-3">
@@ -54,19 +42,8 @@ export default function Navbar({ breadcrumbs, prev, next, showCodespaces }: Navb
           </span>
         ))}
       </div>
-      {(prev || next || showCodespaces) && (
+      {(prev || next) && (
         <div className="flex items-center gap-2">
-          {showCodespaces && (
-            <a
-              href={CODESPACES_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Full VS Code with the TLA+ extension and TLC in the browser, on GitHub Codespaces"
-              className="rounded border border-gray-300 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
-            >
-              Open in VS Code
-            </a>
-          )}
           {prev ? (
             <Link
               href={prev.href}

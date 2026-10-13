@@ -59,11 +59,10 @@ export default function LessonLayout({ lesson, prev, next, children }: LessonLay
           ]}
           prev={prev ? { label: prev.title, href: sectionPath(prev) } : undefined}
           next={next ? { label: next.title, href: sectionPath(next) } : undefined}
-          showCodespaces
         />
       }
       left={children}
-      right={<Playground tabs={tabs} tlcConfigs={tlcConfigs} />}
+      right={<Playground tabs={tabs} tlcConfigs={tlcConfigs} vscodeDir={`${lesson.section}/${lesson.slug}`} />}
     />
   );
 }

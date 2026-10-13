@@ -17,11 +17,13 @@
     "vscode": {
       "extensions": ["tlaplus.vscode-ide"],
       "settings": {
-        "tlaplus.java.options": "-XX:+UseParallelGC"
+        "tlaplus.java.options": "-XX:+UseParallelGC",
+        // Show the welcome page rendered instead of as Markdown source.
+        "workbench.editorAssociations": { "**/.devcontainer/WELCOME.md": "vscode.markdown.preview.editor" }
       }
     },
     "codespaces": {
-      "openFiles": ["lessons/intro/platform/DieHard.tla"]
+      "openFiles": [".devcontainer/WELCOME.md"]
     }
   }
 }
