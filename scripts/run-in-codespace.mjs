@@ -2,7 +2,10 @@
 // src/lib/vscode-handoff.ts): writes the files to playground/<dir>/, opens
 // them in VS Code and model-checks them with TLC in this terminal.
 //
-// Usage: node scripts/run-in-codespace.mjs <base64url payload>
+// Usage: echo <base64url payload> | node scripts/run-in-codespace.mjs
+//
+// The payload comes on stdin, not as an argument: Linux caps a single program
+// argument at 128 KiB, while the builtin echo has no such limit.
 import fs from "fs";
 import os from "os";
 import path from "path";
@@ -16,10 +19,10 @@ function fail(message) {
   process.exit(1);
 }
 
-function decode(arg) {
-  if (!arg) fail("missing payload; copy the command again from the site's \"Run in VS Code\" button");
+function decode(input) {
+  if (!input) fail("missing payload; copy the command again from the site's \"Run in VS Code\" button");
   try {
-    return JSON.parse(Buffer.from(arg, "base64url").toString("utf-8"));
+    return JSON.parse(Buffer.from(input, "base64url").toString("utf-8"));
   } catch {
     fail("could not decode the payload; was the command copied completely?");
   }
@@ -52,7 +55,17 @@ function findTlaTools() {
   return candidates.sort().at(-1);
 }
 
-const payload = decode(process.argv[2]);
+// Read stdin as a stream: fs.readFileSync(0) fails with EAGAIN on Linux when
+// a large pipe is not fully written yet. Without a pipe, stdin is the
+// terminal: don't wait for input that never comes.
+async function readStdin() {
+  if (process.stdin.isTTY) return "";
+  let data = "";
+  for await (const chunk of process.stdin.setEncoding("utf-8")) data += chunk;
+  return data.trim();
+}
+
+const payload = decode(await readStdin());
 if (payload?.v !== 1) fail("unsupported payload version; reload the site and copy the command again");
 
 const dir = path.join(root, "playground", safeDir(payload.dir));
